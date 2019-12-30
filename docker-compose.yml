@@ -1,0 +1,26 @@
+version: '3.2'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    links:
+      - db
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      - JWT_SECRET=flaps
+      - CLIENT_ID=my_client_id
+      - CLIENT_SECRET=my_client_secret
+  db:
+    image: mysql:5.6
+    restart: always
+    ports:
+      - "33060:3306"
+    environment:
+      - MYSQL_DATABASE=reporting
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=app
